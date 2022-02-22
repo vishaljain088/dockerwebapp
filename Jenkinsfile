@@ -1,17 +1,18 @@
-node {
-    stage('Clone Repository') {  
-        checkout scm   
-    }
-    stage('Build Image') {   
-        def customImage = docker.build("vishaljain088/dockerwebapp")
+pipeline {
+  agent any
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
+  stages {
+    stage('Build') {
+      steps {
+        sh 'docker build -t vishaljain088/java-web-app:latest .'
+      }
     }
     stage('Scan') {
-        sh 'trivy vishaljain088/dockerwebapp'
+      steps {
+        sh 'trivy vishaljain088/java-web-app:latest'
+      }
     }
-    stage('Push Image') {
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
-        /* Push the container to the custom Registry */
-        customImage.push()
-        }
-    }
+  }
 }
