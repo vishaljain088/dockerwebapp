@@ -5,6 +5,9 @@ node {
     stage('Build Image') {   
         def customImage = docker.build("vishaljain088/dockerwebapp")
     }
+    stage('Scan') {
+        sh 'trivy vishaljain088/dockerwebapp'
+    }
     stage('Push Image') {
         docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
         /* Push the container to the custom Registry */
