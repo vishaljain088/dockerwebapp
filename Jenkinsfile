@@ -16,12 +16,12 @@ pipeline {
     }
     stage('Scan') {
       steps {
-        sh 'docker run ghcr.io/aquasecurity/trivy:latest image vishaljain088/dockerwebapp > scanning.txt'
+        sh 'docker run ghcr.io/aquasecurity/trivy:latest image vishaljain088/dockerwebapp > scanning.json'
       }
     }
     stage("Email Notification"){
       steps {
-        emailext (attachmentsPattern: 'scanning.txt', subject: "Trivy Scanning", body: '''${SCRIPT, template="groovy-html.template"}''', mimeType: 'text/html', to: 'vishal.j@westagilelabs.com, jenkinsbyjain@gmail.com, vikram.j@westagilelabs.com, javed.a@westagilelabs.com')
+        emailext (attachmentsPattern: 'scanning.txt', subject: "Trivy Scanning", body: '''${SCRIPT, template="groovy-html.template"}''', mimeType: 'text/html', to: 'vishal.j@westagilelabs.com, jenkinsbyjain@gmail.com')
       }
     }
   }
