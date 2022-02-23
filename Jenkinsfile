@@ -21,7 +21,7 @@ pipeline {
     }
     stage("Email Notification"){
       steps {
-        emailext (attachmentsPattern: 'scanning.txt', subject: "Trivy Scanning", body: '''${SCRIPT, template="groovy-html.template"}''', mimeType: 'text/html', to: 'vishal.j@westagilelabs.com, jenkinsbyjain@gmail.com')
+        emailext (attachmentsPattern: 'results.json', subject: "Trivy Scanning", body: '''${SCRIPT, template="groovy-html.template"}''', mimeType: 'text/html', to: 'vishal.j@westagilelabs.com, jenkinsbyjain@gmail.com')
       }
     }
   }
