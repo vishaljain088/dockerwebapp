@@ -16,7 +16,7 @@ pipeline {
     }
     stage('Scan') {
       steps {
-        sh 'docker run ghcr.io/aquasecurity/trivy:latest image --no-progress --exit-code 1 --severity MEDIUM,HIGH,CRITICAL -f json -o scanning.json vishaljain088/dockerwebapp'
+        sh 'docker run ghcr.io/aquasecurity/trivy:latest image vishaljain088/dockerwebapp > scanning.txt'
       }
     }
     stage("Email Notification"){
